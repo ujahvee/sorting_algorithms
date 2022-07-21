@@ -1,49 +1,42 @@
-#include "sort.h"
+ #include "sort.h"
 
 /**
- * swap_items - Swaps two items in an array.
- * @array: The array to modify.
- * @l: The index of the left item.
- * @r: The index of the right item.
+ * selection_sort - sorts an array of integers in ascending
+ * order using the Selection sort algorithm
+ *
+ * @array: array of integers
+ *
+ * @size: size of array
+ *
  */
-void swap_items(int *array, size_t l, size_t r)
-{
-	int tmp;
 
-	if (array != NULL)
-	{
-		tmp = array[l];
-		array[l] = array[r];
-		array[r] = tmp;
-	}
-}
-
-/**
- * selection_sort - Sorts an array using the selection sort algorithm.
- * @array: The array to sort.
- * @size: The length of the array.
- */
 void selection_sort(int *array, size_t size)
 {
-	size_t i, j, low_idx;
+	size_t i, j, min_index;
+	int temp;
+	int flag;
 
-	if (array != NULL)
+	if (size <= 1)
+		return;
+
+	for (i = 0; i < size - 1; i++)
 	{
-		for (i = 0; i < size - 1; i++)
+		min_index = i;
+		for (j = i + 1; j < size; j++)
 		{
-			low_idx = i;
-			for (j = size - 1; j > i; j--)
+			if (array[j] < array[min_index])
 			{
-				if (array[j] < array[low_idx])
-				{
-					low_idx = j;
-				}
+				min_index = j;
+				flag = 1;
 			}
-			if (i != low_idx)
-			{
-				swap_items(array, i, low_idx);
-				print_array(array, size);
-			}
+		}
+		if (flag == 1)
+		{
+			temp = array[min_index];
+			array[min_index] = array[i];
+			array[i] = temp;
+			print_array(array, size);
+			flag = 0;
 		}
 	}
 }
